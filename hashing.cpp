@@ -19,7 +19,11 @@ struct SimpleHash{
     void init(string S, int b, int m){
         s = S;
         N = s.size(), base = b, mod = m;
-        pw.resize(N, 1), inv.resize(N, 1), Hash.resize(N, 0), RHash.resize(N, 0);
+        pw.resize(N);
+        inv.resize(N);
+        Hash.resize(N);
+        RHash.resize(N);
+        precalc();
     }
 
     int add(int a, int b){
@@ -30,7 +34,7 @@ struct SimpleHash{
     }
 
     int mul(int a, int b){
-        int64_t res = (a * 1LL * b) % mod;
+        int res = (a * 1LL * b) % mod;
         if(res < 0) 
             res += mod;
         return res;
@@ -48,12 +52,14 @@ struct SimpleHash{
     }
 
     int precalc(){
-        for(int i = 1; i < N; i++)
-            pw[i] = mul(pw[i-1], base);
+        pw[0] = inv[0] = 1;
+        int pw_inv = power(base, mod-2);
 
-        int pw_inv = power(base, mod-2); // we are calculating this because we need p^(-1) at every step see below
-        for(int i = 1; i < N; i++)
-            inv[i] = mul(inv[i-1], pw_inv); // basically p^(-8) = p^(-7) * p^(-1)
+        for (int i = 1; i < N; i++) {
+            pw[i] = mul(pw[i - 1], base);
+            inv[i] = mul(inv[i - 1], pw_inv);
+        }
+        build();
     }
 
     void build(){
@@ -65,14 +71,12 @@ struct SimpleHash{
 
     int getHash(int x, int y){
         int res = add(Hash[y], (x == 0) ? 0 : -Hash[x-1]);
-        res = mul(res, inv[x]);
-        return res;
+        return mul(res, inv[x]);
     }
 
     int getReverseHash(int x, int y) {
         int res = add(RHash[y], (x == 0) ? 0 : -RHash[x - 1]);
-        res = mul(res, inv[x]);
-        return res;
+        return mul(res, inv[x]);
     }
 };
 
@@ -81,12 +85,7 @@ struct DoubleHash {
 
     DoubleHash(string str) {
         sh1.init(str, 359, 1111211111);
-        sh1.precalc();
-        sh1.build();
-
         sh2.init(str, 709, 1111115111);
-        sh2.precalc();
-        sh2.build();
     }
 
     pair<int, int> getHash(int x, int y) {
@@ -97,6 +96,8 @@ struct DoubleHash {
         return {sh1.getReverseHash(x, y), sh2.getReverseHash(x, y)};
     }
 };
+
+
 
 
 
