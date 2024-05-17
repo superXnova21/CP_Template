@@ -30,7 +30,7 @@ struct SimpleHash{
     }
 
     int mul(int a, int b){
-        int res = (a * 1LL * b) % mod;
+        int64_t res = (a * 1LL * b) % mod;
         if(res < 0) 
             res += mod;
         return res;
