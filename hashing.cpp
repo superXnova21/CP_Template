@@ -84,8 +84,8 @@ struct DoubleHash {
     SimpleHash sh1, sh2;
 
     DoubleHash(string str) {
-        sh1.init(str, 31, 1000000007);
-        sh2.init(str, 29, 1000000009);
+        sh1.init(str, 1949313259, 2091573227);
+        sh2.init(str, 1997293877, 2117566807);
     }
 
     pair<int, int> getHash(int x, int y) {
