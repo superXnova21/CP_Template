@@ -51,7 +51,7 @@ struct SimpleHash{
         return res;
     }
 
-    int precalc(){
+    void precalc(){
         pw[0] = inv[0] = 1;
         int pw_inv = power(base, mod-2);
 
