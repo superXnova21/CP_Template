@@ -19,12 +19,12 @@ struct chotoVai_Mo {
 
     chotoVai_Mo(vector<int>& arr) : a(arr) {} 
 
-    void add(int i) {
-        cur_sum += a[i];
+    void add(int x) {
+        cur_sum += x;
     }
 
-    void rem(int i){
-        cur_sum -= a[i];
+    void rem(int x){
+        cur_sum -= x;
     }
 
     int get_ans(){
@@ -38,18 +38,18 @@ struct chotoVai_Mo {
         for(const auto &q : queries){
             while(cur_l > q.L){
                 cur_l--;
-                add(cur_l);
+                add(a[cur_l]);
             }
             while(cur_r < q.R){
                 cur_r++;
-                add(cur_r);
+                add(a[cur_r]);
             }
             while(cur_l < q.L){
-                rem(cur_l);
+                rem(a[cur_l]);
                 cur_l++;
             }
             while(cur_r > q.R){
-                rem(cur_r);
+                rem(a[cur_r]);
                 cur_r--;
             }
             ans[q.idx] = get_ans();
