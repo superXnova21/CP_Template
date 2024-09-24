@@ -36,22 +36,10 @@ struct chotoVai_Mo {
         sort(queries.begin(), queries.end());
 
         for(const auto &q : queries){
-            while(cur_l > q.L){
-                cur_l--;
-                add(a[cur_l]);
-            }
-            while(cur_r < q.R){
-                cur_r++;
-                add(a[cur_r]);
-            }
-            while(cur_l < q.L){
-                rem(a[cur_l]);
-                cur_l++;
-            }
-            while(cur_r > q.R){
-                rem(a[cur_r]);
-                cur_r--;
-            }
+            while(cur_l > q.L) add(a[--cur_l]);
+            while(cur_r < q.R) add(a[++cur_r]);
+            while(cur_l < q.L) rem(a[cur_l++]);
+            while(cur_r > q.R) rem(a[cur_r--]);
             ans[q.idx] = get_ans();
         }
         return ans;
