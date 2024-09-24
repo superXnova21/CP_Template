@@ -1,3 +1,4 @@
+// Faster method for query available for odd and even block size, if TLE check cp-algo
 // Used generic block size. If calc manually : B = sqrt(n)
 const int B = 440; 
 
