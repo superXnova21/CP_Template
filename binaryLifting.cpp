@@ -38,6 +38,8 @@ struct BinaryLifting {
     }
 
     int kthAncestor(int node, int k) {
+        if(k > dep[node]) return -1;
+        
         for(int i = 0; i < ROW; i++) { 
             if(node != -1) { 
                 if(k & (1 << i)) node = up[i][node];
