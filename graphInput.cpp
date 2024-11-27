@@ -2,7 +2,6 @@ struct Graph {
     int V;
     vector<vector<pair<int, int>>> adj;  
 
-    // Initialize like - Graph g(vertices)
     Graph(int vertices) : V(vertices), adj(vertices + 1) {}
 
     void addEdge(int u, int v, int w = 1, bool directed = false) {
