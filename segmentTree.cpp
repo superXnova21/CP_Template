@@ -8,6 +8,10 @@ struct segtree{
         while(size < n) size *= 2;
         sums.assign(2 * size, 0LL);
     }
+
+    int operation(int x, int y) {
+        return __gcd(x, y);
+    }
  
     void build(vector<int>& a, int x, int lx, int rx){
         if(rx-lx == 1){
@@ -19,7 +23,7 @@ struct segtree{
         int m = (lx + rx) / 2;
         build(a, 2 * x + 1, lx, m);
         build(a, 2 * x + 2, m, rx);
-        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
+        sums[x] = operation(sums[2 * x + 1], sums[2 * x + 2]);
     }
  
     void build(vector<int>& a){
@@ -37,7 +41,7 @@ struct segtree{
         } else{
             set(i, v, 2 * x + 2, m, rx);
         }
-        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
+        sums[x] = operation(sums[2 * x + 1], sums[2 * x + 2]);
     }
  
     void set(int i, int v){
@@ -50,7 +54,7 @@ struct segtree{
         int m = (lx + rx) / 2;
         long long s1 = query(l, r, 2 * x + 1, lx, m);
         long long s2 = query(l, r, 2 * x + 2, m, rx);
-        return s1 + s2;
+        return operation(s1, s2);
     }
  
     long long query(int l, int r){
